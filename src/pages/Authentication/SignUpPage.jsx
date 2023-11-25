@@ -2,30 +2,61 @@ import { useContext } from "react";
 import img from "../../assets/Banner/login3.webp"
 import { useForm } from "react-hook-form"
 import { AuthContext } from "../../Provider/AuthProvider";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import useAxiousSecure from "../../hook/useAxiousSecure";
+const Image_hosting_key = 'f7e60a735ab4c0b0fbfb6d08328c7dbf';
+const Image_hosting_api = `https://api.imgbb.com/1/upload?key=${Image_hosting_key}`
 
 
 const SignUpPage = () => {
-    const {createUser,updateUserProfile}=useContext(AuthContext)
+    const { createUser, updateUserProfile, userLogout } = useContext(AuthContext)
     const { register, handleSubmit, formState: { errors }, } = useForm()
-    const onSubmit = (data) => {
+    const navigate = useNavigate()
+    const axiousSecure=useAxiousSecure()
+    const onSubmit =  (data) => {
         console.log(data)
-        createUser(data.email,data.password)
-        .then(result=>{
-            console.log(result.user)
-        })
-        .catch(error=>{
-            console.error(error)
-            updateUserProfile(data.name,data.photo)
-            .then(()=>{
-                const userInfo={
-                    name:data.name,
-                    email:data.email,
-                    photo:data.photo,
-                    role:data.role,
+        createUser(data.email, data.password)
+            .then(async (result) => {
+                console.log(result.user)
+                const photoFile = { image: data.image[0] }
+                const sentfileImgbb = await axiousSecure.post(Image_hosting_api, photoFile, {
+                    headers: {
+                        'content-type':'multipart/form-data'
+                    }
+                })
+                if (sentfileImgbb.data.success) {
+                    updateUserProfile(data.name, data.display_url)
+                        .then(async () => {
+                            const userInfo = {
+                                name: data.name,
+                                email: data.email,
+                                image: data.display_url,
+                                role: data.role,
+                            }
+                            const userRes = await axios.post('http://localhost:5000/users', userInfo)
+                            if (userRes.data.insertedId) {
+                                alert('signup success');
+                                userLogout()
+                                    .then(() => {
+                                        navigate('/login')
+                                    })
+                                    .catch(error => {
+                                        console.error(error)
+                                    })
+                            }
+
+                        })
+                        .catch(error => {
+                            console.error(error)
+                        })
+
                 }
             })
-        })
-    
+            .catch(error => {
+                console.error(error)
+            })
+
     }
 
     return (
@@ -64,20 +95,20 @@ const SignUpPage = () => {
                                 <span className="label-text">User type</span>
                             </label>
                             <select defaultValue="default" {...register("role", { required: true })} className="select select-bordered w-full max-w-xs">
-                            <option disabled defaultValue="default">Select here...</option>
-                            <option value="user">User</option>
-                            <option value="deliverymen">DeliveryMen</option>
-                        </select>
-                        {errors.role?.type === "required" && (
-                            <p className="text-red-400">User type is required</p>
-                        )}
+                                <option disabled defaultValue="default">Select here...</option>
+                                <option value="user">User</option>
+                                <option value="deliverymen">DeliveryMen</option>
+                            </select>
+                            {errors.role?.type === "required" && (
+                                <p className="text-red-400">User type is required</p>
+                            )}
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Photo</span>
                             </label>
-                            <input type="file" {...register("photo", { required: true })} placeholder="photo" className="input input-bordered" />
-                            {errors.photo?.type === "required" && <span className="text-red-900">Photo field is required</span>}
+                            <input type="file" {...register("image", { required: true })} placeholder="photo" className="input input-bordered" />
+                            {errors.image?.type === "required" && <span className="text-red-900">Photo field is required</span>}
                         </div>
                         <div className="form-control">
                             <label className="label">
