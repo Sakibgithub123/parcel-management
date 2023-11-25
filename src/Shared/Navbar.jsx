@@ -57,7 +57,7 @@ const Navbar = () => {
             </div>
             <div className="navbar-end gap-3">
                 <Link to={'/login'} className="btn">Login</Link>
-                <a className="btn">Signup</a>
+                <Link to={'/signup'} className="btn">Signup</Link>
             </div>
         </div>
     );
