@@ -1,10 +1,32 @@
+import { useContext } from "react";
 import img from "../../assets/Banner/login3.webp"
 import { useForm } from "react-hook-form"
+import { AuthContext } from "../../Provider/AuthProvider";
 
 
 const SignUpPage = () => {
+    const {createUser,updateUserProfile}=useContext(AuthContext)
     const { register, handleSubmit, formState: { errors }, } = useForm()
-    const onSubmit = (data) => console.log(data)
+    const onSubmit = (data) => {
+        console.log(data)
+        createUser(data.email,data.password)
+        .then(result=>{
+            console.log(result.user)
+        })
+        .catch(error=>{
+            console.error(error)
+            updateUserProfile(data.name,data.photo)
+            .then(()=>{
+                const userInfo={
+                    name:data.name,
+                    email:data.email,
+                    photo:data.photo,
+                    role:data.role,
+                }
+            })
+        })
+    
+    }
 
     return (
         <div className=" min-h-screen  my-10">
