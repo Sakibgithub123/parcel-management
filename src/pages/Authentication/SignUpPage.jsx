@@ -5,6 +5,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import useAxiousSecure from "../../hook/useAxiousSecure";
+import Swal from 'sweetalert2'
 const Image_hosting_key = 'f7e60a735ab4c0b0fbfb6d08328c7dbf';
 const Image_hosting_api = `https://api.imgbb.com/1/upload?key=${Image_hosting_key}`
 
@@ -24,19 +25,27 @@ const SignUpPage = () => {
                     headers: {
                         'content-type':'multipart/form-data'
                     }
-                })
+                });
+                // console.log(sentfileImgbb.data.data.display_url)
                 if (sentfileImgbb.data.success) {
-                    updateUserProfile(data.name, data.display_url)
+                    // console.log(data.display_url)
+                    updateUserProfile(data.name, sentfileImgbb.data.data.display_url)
                         .then(async () => {
                             const userInfo = {
                                 name: data.name,
                                 email: data.email,
-                                image: data.display_url,
                                 role: data.role,
+                                image: sentfileImgbb.data.data.display_url,
+                    
                             }
+                            // console.log(userInfo)
                             const userRes = await axios.post('http://localhost:5000/users', userInfo)
                             if (userRes.data.insertedId) {
-                                alert('signup success');
+                                Swal.fire({
+                                    title: "Good job!",
+                                    text: "Signup success!",
+                                    icon: "success"
+                                  });
                                 userLogout()
                                     .then(() => {
                                         navigate('/login')

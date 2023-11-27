@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2'
 const LoginPage = () => {
     const { userLogin, googleLogin } = useContext(AuthContext)
     const location=useLocation();
@@ -16,7 +17,11 @@ const LoginPage = () => {
         userLogin(data.email, data.password)
             .then(resut => {
                 console.log(resut.user)
-                alert("login succcess")
+                Swal.fire({
+                    title: "Good job!",
+                    text: "Login success!",
+                    icon: "success"
+                  });
                 navigate(from, { replace: true });
 
             })
@@ -35,6 +40,11 @@ const LoginPage = () => {
             axios.post('http://localhost:5000/user',userInfo)
             .then(res=>{
                 console.log(res.data)
+                Swal.fire({
+                    title: "Good job!",
+                    text: "Login success!",
+                    icon: "success"
+                  });
                 navigate(from, { replace: true });
             })
             .catch(error=>{

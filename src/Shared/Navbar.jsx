@@ -1,10 +1,20 @@
-import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const Navbar = () => {
+    const { user, userLogout } = useContext(AuthContext)
+
+    const handleLogOut=()=>{
+        userLogout()
+        .then(()=>{})
+        .catch()
+
+    }
     const navItems =
         <>
-            <li><a>Home</a></li>
-            <li><a>Dashboard</a></li>
+            <li><NavLink to={'/'}>Home</NavLink></li>
+            <li><NavLink to={'/dashboard'}>Dashboard</NavLink></li>
             <li className="dropdown dropdown-bottom">
                 {/* <label tabIndex={0} >Parent</label>
                 <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
@@ -18,9 +28,9 @@ const Navbar = () => {
                 </label>
                 <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
                     {/* <li> */}
-                        <p className="ml-3 text-lg font-extrabold">
-                            User Name
-                        </p>
+                    <p className="ml-3 text-lg font-extrabold">
+                        User Name
+                    </p>
                     {/* </li> */}
                     <li><a>Dashboard</a></li>
                     <li><a>Logout</a></li>
@@ -56,8 +66,16 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end gap-3">
-                <Link to={'/login'} className="btn">Login</Link>
-                <Link to={'/signup'} className="btn">Signup</Link>
+                {
+                    user ?
+                        <button onClick={handleLogOut}>Logout</button>
+                        :
+                        <div>
+                            <Link to={'/login'} className="btn">Login</Link>
+                            <Link to={'/signup'} className="btn">Signup</Link>
+                        </div>
+                }
+
             </div>
         </div>
     );
