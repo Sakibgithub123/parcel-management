@@ -2,12 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiousSecure from "../../../hook/useAxiousSecure";
 import { useForm } from "react-hook-form"
 import Swal from 'sweetalert2'
-import { useState } from "react";
+// import { useState } from "react";
 
 const AllParcel = () => {
-    const axiousSecure = useAxiousSecure();
     const { register, handleSubmit, formState: { errors }, } = useForm()
-    const [deliverymens,setDeliverymens]=useState([])
+    const axiousSecure = useAxiousSecure();
+    // const [deliverymens,setDeliverymens]=useState([])
     const { data: parcels = [], refetch } = useQuery({
         queryKey: ['parcels'],
         queryFn: async () => {
@@ -20,19 +20,16 @@ const AllParcel = () => {
 
     // console.log(deliverymens)
 
-    // const { data: deliverymens = [], } = useQuery({
-    //     queryKey: ['deliverymens'],
-    //     queryFn: async () => {
-           axiousSecure.get('/deliverymens/')
-           .then(res=>{
-            setDeliverymens(res.data)
-
-           })
-
-
-            // return result.data
-    //     }
-    // })
+    const { data: deliverymens = [], } = useQuery({
+        queryKey: ['deliverymens'],
+        queryFn: async () => {
+         const result=await  axiousSecure.get('/deliverymens/')
+        //    .then(res=>{
+        //     setDeliverymens(res.data)
+        //    })
+            return result.data
+        }
+    })
 
     const onSubmit = async (data) => {
         console.log(data)

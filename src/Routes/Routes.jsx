@@ -17,6 +17,7 @@ import AllDeliveryMen from "../pages/Dashboard/Admin/AllDeliveryMen";
 import MyDeliveryList from "../pages/Dashboard/DeliveryMen/DeliveryMen/MyDeliveryList";
 import AllParcel from "../pages/Dashboard/Admin/AllParcel";
 import Reviews from "../pages/Dashboard/DeliveryMen/DeliveryMen/Reviews";
+import ProfileUpdate from "../pages/Dashboard/User/Action/ProfileUpdate";
 
 
 export const router = createBrowserRouter([
@@ -58,6 +59,10 @@ export const router = createBrowserRouter([
          {
             path:'myProfile',
             element:<MyProfile></MyProfile>
+         },
+         {
+            path:'updateProfile/:id',
+            element:<ProfileUpdate></ProfileUpdate>
          },
          //admin
          {

@@ -101,6 +101,7 @@ const AllUsers = () => {
                             <th>Phone</th>
                             <th>No of parcel Booked</th>
                             <th>Total Spent Amount</th>
+                            <th>Role</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -118,9 +119,10 @@ const AllUsers = () => {
                                         </td>
                                         <td>No of parcel Booked</td>
                                         <td>Total Spent Amount</td>
+                                        <td> {user.role}</td>
                                         <th>
-                                           <button onClick={()=>{handleMakeAdmin(user._id)}} className="btn">Make Admin</button>
-                                           <button onClick={()=>{handleDelivermen(user._id)}} className="btn">Make Deliverymen</button>
+                                           <button onClick={()=>{handleMakeAdmin(user._id)}} className="btn">{user.role=='user'?'Make Admin' :'Admin'}</button>
+                                           <button onClick={()=>{handleDelivermen(user._id)}} className="btn">{user.role=='user'?'Make Deliverymen' :'Deliverymen'}</button>
 
                                         </th>
                                     </tr>

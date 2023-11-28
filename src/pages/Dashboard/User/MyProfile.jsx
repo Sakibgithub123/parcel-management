@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../../Provider/AuthProvider";
 import useAxiousSecure from "../../../hook/useAxiousSecure";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 
 
 
@@ -41,7 +42,7 @@ const MyProfile = () => {
                     <h2 className="card-title">{profile.name}</h2>
                     <p>Email : {profile.email}</p>
                     <div className="card-actions">
-                        <button className="btn btn-primary">Update</button>
+                        <Link to={`/dashboard/updateProfile/${profile._id}`}><button className="btn btn-primary">Update</button></Link>
                     </div>
                 </div>
             </div>
