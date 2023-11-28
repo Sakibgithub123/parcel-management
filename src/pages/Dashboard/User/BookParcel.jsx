@@ -8,7 +8,7 @@ const BookParcel = () => {
     const {user}=useContext(AuthContext)
     const axiousSecure=useAxiousSecure()
     const [weightPrice,setWeightPrice]=useState(null)
-    // const disabled =true;
+    const currentDate = new Date().toJSON().slice(0, 10);
     const readOnly=true;
     const { register, handleSubmit, formState: { errors }, } = useForm()
     const onSubmit = async  (data) => {
@@ -27,6 +27,7 @@ const BookParcel = () => {
             delivery_longitude:data.delivery_longitude,
             price:data.price,
             status:'pending',
+            booking_date:data.booking_date,
         }
         const bookParcel=await axiousSecure.post('/bookParcel',parcelDetails)
         if(bookParcel.data.insertedId){
@@ -133,6 +134,7 @@ const BookParcel = () => {
                             <input type="text" readOnly={readOnly} defaultValue={weightPrice} {...register("price", { required: true, })} placeholder="price" className="input input-bordered" />
                             {errors.price?.type === "required" && <span className="text-red-900">Price field is required</span>}
                         </div>
+                        <input type="hidden" {...register("booking_date")}   value={currentDate} />
                         <div className="form-control mt-6">
                             <button type="submit" className="btn btn-primary">Book Parcel</button>
                         </div>

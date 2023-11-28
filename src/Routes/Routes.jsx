@@ -13,9 +13,10 @@ import ParcelUpdatePage from "../pages/Dashboard/User/Action/ParcelUpdatePage";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import Statistics from "../pages/Dashboard/Admin/Statistics";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers";
-import AllParcels from "../pages/Dashboard/Admin/AllParcels";
 import AllDeliveryMen from "../pages/Dashboard/Admin/AllDeliveryMen";
 import MyDeliveryList from "../pages/Dashboard/DeliveryMen/DeliveryMen/MyDeliveryList";
+import AllParcel from "../pages/Dashboard/Admin/AllParcel";
+import Reviews from "../pages/Dashboard/DeliveryMen/DeliveryMen/Reviews";
 
 
 export const router = createBrowserRouter([
@@ -65,11 +66,12 @@ export const router = createBrowserRouter([
          },
          {
             path:'allUsers',
-            element:<AllUsers></AllUsers>
+            element:<AllUsers></AllUsers>,
+            loader:()=>fetch('http://localhost:5000/pageCount')
          },
          {
             path:'allParcels',
-            element:<AllParcels></AllParcels>
+            element:<AllParcel></AllParcel>
          },
          
          {
@@ -80,6 +82,10 @@ export const router = createBrowserRouter([
          {
             path:'myDeliveryList',
             element:<MyDeliveryList></MyDeliveryList>
+         },
+         {
+            path:'reviews',
+            element:<Reviews></Reviews>
          },
     ]
     }

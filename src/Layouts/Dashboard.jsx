@@ -34,6 +34,9 @@ const Dashboard = () => {
                     <li>
                         <NavLink to='/dashboard/myDeliveryList'>My Delivery List  </NavLink>
                     </li>
+                    <li>
+                        <NavLink to='/dashboard/reviews'>Reviews  </NavLink>
+                    </li>
                    
                     <div className="divider"></div>
                     <li>

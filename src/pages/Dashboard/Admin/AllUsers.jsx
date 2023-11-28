@@ -1,19 +1,48 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiousSecure from "../../../hook/useAxiousSecure";
 import Swal from 'sweetalert2'
+import { useState } from "react";
+import { useLoaderData } from "react-router-dom";
 
 
 const AllUsers = () => {
     const axiousSecure = useAxiousSecure();
-  
+    const {count}=useLoaderData()
+    const [itemPerPage,setItemPerPage]=useState(5);
+    const [currentPage,setCurrentPage]=useState(0);
+    const noOfPage=Math.ceil(count/itemPerPage)
+    const pages=[];
+    for(let i=0; i<noOfPage; i++){
+        pages.push(i)
+    }
+    // const pages=[...Array(noOfPage).keys()]
+    const handleItemPerpage=(e)=>{
+        const val= parseInt(e.target.value);
+        setItemPerPage(val);
+        setCurrentPage(0)
+    }
+
+    const handlePrevPage=()=>{
+        if(currentPage > 0){
+            setCurrentPage(currentPage -1)
+        }
+    }
+    const handleNextPage=()=>{
+        if(currentPage > pages.length-1){
+            setCurrentPage(currentPage + 1)
+        }
+    }
+
+    //fetch data
     const { data: users = [], refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const result = await axiousSecure.get('/users/')
+            const result = await axiousSecure.get(`/users?page=${currentPage}&size=${itemPerPage}`)
             refetch()
             return result.data
         }
     })
+   
     //make admin
     const handleMakeAdmin= id=>{
         Swal.fire({
@@ -103,6 +132,19 @@ const AllUsers = () => {
                         }
                     </tbody>
                 </table>
+            </div>
+            <div className="pagination my-5">
+                <button className="text-base hover:bg-[#2f2626] bg-[#894444] mx-2 p-2 rounded-lg text-[#fff] font-semibold" onClick={handlePrevPage}>Prev</button>
+                {
+                    pages.map(page=> <button className="text-base mx-2 hover:bg-[#2f2626] bg-[#894444] p-2 rounded-lg text-[#fff] font-semibold"  onClick={()=>setItemPerPage(page)}>{page}</button>)
+                }
+                <button className="text-base hover:bg-[#2f2626] mx-2 bg-[#894444] p-2 rounded-lg text-[#fff] font-semibold" onClick={handleNextPage}>Next</button>
+                <select className="text-base mx-2 bg-[#894444] p-2 rounded-lg text-[#fff] font-semibold" value={itemPerPage} onChange={handleItemPerpage} name="" id="">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select>
             </div>
         </div>
     );
