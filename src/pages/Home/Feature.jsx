@@ -4,8 +4,20 @@ import feature3 from "../../assets/Feature/feature3.png"
 import SectionTitle from "../../components/SectionTitle"
 
 import CountUp from 'react-countup';
+import useAxiousSecure from "../../hook/useAxiousSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const Feature = () => {
+    const axiousSecure=useAxiousSecure()
+
+    const {data:featureCount={},refetch}=useQuery({
+        queryKey:['featureCount'],
+        queryFn:async()=>{
+            refetch()
+            const res =await axiousSecure.get('/featureCount')
+            return res.data
+        }
+    })
    
    
     return (
@@ -44,15 +56,15 @@ const Feature = () => {
             <div className="flex flex-row justify-between items-center">
                 <div className="text-center">
                     <h3 className="text-2xl font-semibold text-[#fff]">Parcel Booked</h3>
-                    <h2 className="text-4xl font-semibold text-[#fff]"><CountUp end={100} delay={5} enableScrollSpy /></h2>
+                    <h2 className="text-4xl font-semibold text-[#fff]"><CountUp start={0} end={featureCount.totalBooked} delay={5} enableScrollSpy /></h2>
                 </div>
                 <div className="text-center">
                     <h3 className="text-2xl font-semibold text-[#fff]">Parcel Delivered</h3>
-                    <h2 className="text-4xl font-semibold text-[#fff]"> <CountUp end={100} delay={5} enableScrollSpy/> </h2>
+                    <h2 className="text-4xl font-semibold text-[#fff]"> <CountUp start={0} end={featureCount.totalDeliverey} delay={5} enableScrollSpy/> </h2>
                 </div>
                 <div className="text-center">
                     <h3 className="text-2xl font-semibold text text-[#fff]">Our Customers</h3>
-                    <h2 className="text-4xl font-semibold text-[#fff]"><CountUp end={100} delay={5} enableScrollSpy/>  </h2>
+                    <h2 className="text-4xl font-semibold text-[#fff]"><CountUp start={0} end={featureCount.totalUser} delay={5} enableScrollSpy/>  </h2>
                 </div>
             </div>
 

@@ -117,8 +117,8 @@ const AllUsers = () => {
                                         <td>
                                             {user.phone}
                                         </td>
-                                        <td>No of parcel Booked</td>
-                                        <td>Total Spent Amount</td>
+                                        <td>{user.totalBooked}</td>
+                                        <td>{user.totalPrice}</td>
                                         <td> {user.role}</td>
                                         <th>
                                            <button onClick={()=>{handleMakeAdmin(user._id)}} className="btn">{user.role=='user'?'Make Admin' :'Admin'}</button>

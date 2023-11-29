@@ -34,6 +34,7 @@ const SignUpPage = () => {
                             const userInfo = {
                                 name: data.name,
                                 email: data.email,
+                                phone:data.phone,
                                 role: data.role,
                                 image: sentfileImgbb.data.data.display_url,
                     
@@ -98,6 +99,19 @@ const SignUpPage = () => {
                             })} placeholder="email" className="input input-bordered" required />
                             {errors.email?.type === "required" && <span className="text-red-900">Email Field is required</span>}
                             {errors.email?.type === "pattern" && <span className="text-red-900">Enter a valid email address. </span>}
+                        </div>
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text">Phone</span>
+                            </label>
+                            <input type="text"  {...register("phone", {
+                                required: true,maxLength:11,minLength:11,
+                                pattern: /s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*/
+                            })} placeholder="phone" className="input input-bordered" required />
+                            {errors.phone?.type === "required" && <span className="text-red-900">Phone Field is required</span>}
+                            {errors.phone?.type === "maxLength" && <span className="text-red-900">Phone no must be 11 digit</span>}
+                            {errors.phone?.type === "minLength" && <span className="text-red-900">Phone no must be 11 digit</span>}
+                            {errors.phone?.type === "pattern" && <span className="text-red-900">Enter a valid phone number. </span>}
                         </div>
                         <div className="form-control">
                             <label className="label">

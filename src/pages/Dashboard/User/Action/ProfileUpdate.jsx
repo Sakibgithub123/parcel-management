@@ -14,7 +14,7 @@ const ProfileUpdate = () => {
     const { data: userId } = useQuery({
         queryKey: ['userId'],
         queryFn: async () => {
-            const result = await axiousSecure.get(`/userId/${user?.email}`)
+            const result = await axiousSecure.get(`/users/${user?.email}`)
             return result.data
         }
     })
@@ -34,7 +34,7 @@ const ProfileUpdate = () => {
 
             }
             // console.log(userInfo)
-            const userRes = await axiousSecure.patch(`http://localhost:5000/userimg/${userId._id}`, userInfo)
+            const userRes = await axiousSecure.patch(`http://localhost:5000/users/${userId._id}`, userInfo)
             if (userRes.data.insertedId) {
                 Swal.fire({
                     title: "Success!",

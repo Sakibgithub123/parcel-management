@@ -13,6 +13,7 @@ const AllDeliveryMen = () => {
             return result.data
         }
     })
+    console.log(deliverymens)
 
     return (
         <div>
@@ -41,12 +42,9 @@ const AllDeliveryMen = () => {
                                         <td>
                                             {deliverymen.phone}
                                         </td>
-                                        <td>No of parcel delivered</td>
-                                        <td>Average review</td>
-                                        <th>
-                                           
-
-                                        </th>
+                                        <td>{deliverymen.total_delivered}</td>
+                                        <td>{deliverymen.total_rating}</td>
+                                       
                                     </tr>
 
 

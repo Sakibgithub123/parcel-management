@@ -25,7 +25,7 @@ const BookParcel = () => {
             delivery_date:data.delivery_date,
             delivery_latitude:data.delivery_latitude,
             delivery_longitude:data.delivery_longitude,
-            price:data.price,
+            price:parseFloat(data.price),
             status:'pending',
             booking_date:data.booking_date,
         }

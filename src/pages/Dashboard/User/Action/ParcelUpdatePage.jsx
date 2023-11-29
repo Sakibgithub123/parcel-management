@@ -31,7 +31,7 @@ const ParcelUpdatePage = () => {
             delivery_date: data.delivery_date,
             delivery_latitude: data.delivery_latitude,
             delivery_longitude: data.delivery_longitude,
-            price: data.price,
+            price: parseFloat(data.price),
             // status:'pending',
         }
         const bookParcel = await axiousSecure.patch(`/updateParcel/${_id}`, parcelDetails)
