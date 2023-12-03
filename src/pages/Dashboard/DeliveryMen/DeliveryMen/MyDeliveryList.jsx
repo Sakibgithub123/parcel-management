@@ -3,12 +3,15 @@ import useAxiousSecure from "../../../../hook/useAxiousSecure";
 import { useContext } from "react";
 import { AuthContext } from "../../../../Provider/AuthProvider";
 import Swal from 'sweetalert2'
+import { Helmet } from "react-helmet";
+// import * as React from 'react';
+// import Map from 'react-map-gl';
+// <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v<YOUR_MAPBOX_VERSION>/mapbox-gl.css' rel='stylesheet' />
 
 
 const MyDeliveryList = () => {
     const axiousSecure = useAxiousSecure();
-   
-  const {user}=useContext(AuthContext) 
+    const { user } = useContext(AuthContext)
     const { data: deliverymenId } = useQuery({
         queryKey: ['deliverymenId'],
         queryFn: async () => {
@@ -25,13 +28,12 @@ const MyDeliveryList = () => {
         queryKey: ['deliverylists'],
         queryFn: async () => {
             const result = await axiousSecure.get(`/deliverylist/${deliverymenId._id}`)
-            refetch()
             return result.data
         }
     })
     // console.log(deliverylists)
     //cancel booking
-    const handleCancelBooking= id=>{
+    const handleCancelBooking = id => {
         Swal.fire({
             title: "Are you sure?",
             text: "You want to cancel this this!",
@@ -40,24 +42,25 @@ const MyDeliveryList = () => {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, cancel it!"
-          }).then(async(result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
                 // const cancelStatus={
                 //     status:'Cancelled'
                 // }
-                const cancelParcel = await axiousSecure.patch(`/parcels/${id}`) 
-                if(cancelParcel.data.modifiedCount > 0){
+                const cancelParcel = await axiousSecure.patch(`/parcels/${id}`)
+                if (cancelParcel.data.modifiedCount > 0) {
+                    refetch()
                     Swal.fire({
                         title: "Cancel!",
                         text: "Your parcel has been cancelled.",
                         icon: "success"
-                      });
+                    });
                 }
             }
-          });
+        });
     }
     //delivered booking
-    const handleDeliveredBooking= id=>{
+    const handleDeliveredBooking = id => {
         Swal.fire({
             title: "Are you sure?",
             text: "You want to Delivered this this!",
@@ -66,29 +69,36 @@ const MyDeliveryList = () => {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, Delivered it!"
-          }).then(async(result) => {
+        }).then(async (result) => {
             if (result.isConfirmed) {
                 // const cancelStatus={
                 //     status:'Cancelled'
                 // }
-                const cancelParcel = await axiousSecure.patch(`/parcelsDelivery/${id}`) 
-                if(cancelParcel.data.modifiedCount > 0){
+                const cancelParcel = await axiousSecure.patch(`/parcelsDelivery/${id}`)
+                if (cancelParcel.data.modifiedCount > 0) {
+                    refetch()
                     Swal.fire({
-                        title: "Cancel!",
+                        title: "Delivered!",
                         text: "Your parcel has been Delivered.",
                         icon: "success"
-                      });
+                    });
                 }
             }
-          });
+        });
     }
     return (
         <div>
-            <h1>My Delivery List</h1>
+
+            <div>
+                <h3 className="text-center bg-lime-600 text-lime-500 py-4 text-3xl font-extrabold uppercase my-10">My Delivery List</h3>
+            </div>
+            <Helmet>
+                <title>|MyDeliveryList</title>
+            </Helmet>
             <div className="overflow-x-auto">
                 <table className="table">
                     {/* head */}
-                    <thead>
+                    <thead className="font-semibold text-base text-lime-900 uppercase border-b-2">
                         <tr>
 
                             <th>Booked User’s Name</th>
@@ -101,7 +111,7 @@ const MyDeliveryList = () => {
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="font-semibold text-sm text-[#554f4f]">
                         {/* row 1 */}
                         {
                             deliverylists.map(deliverylist =>
@@ -120,23 +130,24 @@ const MyDeliveryList = () => {
                                         <td>{deliverylist.appr_delivery_date}</td>
                                         <td>{deliverylist.reciever_phone_no}</td>
                                         <td>{deliverylist.delivery_address}</td>
+                                        <td>{deliverylist.status}</td>
                                         <th>
-                                           <button className="btn btn-primary">View Location</button>
-                                           <button onClick={()=>{handleCancelBooking(deliverylist._id)}} className="btn btn-warning">Cancel</button>
-                                           <button onClick={()=>{handleDeliveredBooking(deliverylist._id)}} className="btn" >Delivery</button>
+                                            <button onClick={() => { handleCancelBooking(deliverylist._id) }} className="bg-red-400 text-[#ffffff] py-2 px-3 my-2 mx-2 rounded-sm">Cancel</button>
+                                            {
+                                                deliverylist.status == 'delivered' ? "" :
+                                                    <button onClick={() => { handleDeliveredBooking(deliverylist._id) }} className="bg-lime-400 text-[#ffffff] py-2 px-3 rounded-sm my-2 mx-2" >Delivery</button>
 
+                                            }
+                                            <button className="bg-green-400 text-[#ffffff] py-2 px-3 rounded-sm mx-2">View Location</button> 
                                         </th>
                                     </tr>
-
-
-
                                 </>
                             )
                         }
                     </tbody>
                 </table>
             </div>
-            
+
         </div>
     );
 };

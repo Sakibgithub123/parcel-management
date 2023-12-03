@@ -4,8 +4,9 @@ import { useForm } from "react-hook-form"
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import axios from "axios";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'
+import { Helmet } from "react-helmet";
 const LoginPage = () => {
     const { userLogin, googleLogin } = useContext(AuthContext)
     const location=useLocation();
@@ -37,7 +38,7 @@ const LoginPage = () => {
                 email:result.user.displayName,
                 role:'user'
             }
-            axios.post('http://localhost:5000/user',userInfo)
+            axios.post('https://parcel-management-server-phi.vercel.app//user',userInfo)
             .then(res=>{
                 console.log(res.data)
                 Swal.fire({
@@ -56,15 +57,15 @@ const LoginPage = () => {
 
     return (
         <div className=" min-h-screen  my-10">
-            <p className="py-6 text-center font-semibold text-2xl">Provident cupiditate voluptatem et in.
-                Quaerat fugiat ut assumenda excepturi exercitationem quasi.
-                In deleniti eaque aut repudiandae et a id nisi.</p>
+             <Helmet>
+                <title>|Login</title>
+            </Helmet>
             <div className="hero-content flex-col lg:flex-row-reverse gap-10">
-                <div className="text-center lg:text-left w-1/3 md:mb-8 ">
+                <div className="text-center lg:text-left lg:w-1/3 md:mb-8 ">
                     <h1 className="text-5xl font-bold md:ml-10 mb-4">Login now!</h1>
                     <img className="w-3/4" src={img} alt="" />
                 </div>
-                <div className="card  w-1/3 shadow-2xl bg-base-100">
+                <div className="card lg:w-1/3 shadow-2xl bg-base-100">
                     <h3 className="text-2xl font-bold text-center mb-4">Login</h3>
                     <button onClick={handlegoogleLogin} className="btn flex flex-row justify-center items-center"> <img src={googleimg} width={36} alt="" /><span>Google login</span></button>
                     <form onSubmit={handleSubmit(onSubmit)} className="card-body">
@@ -90,10 +91,12 @@ const LoginPage = () => {
                                 <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                             </label>
                         </div>
+                        <p className="font-semibold text-center">Don't have any account?<Link className="underline text-[#023b6d] " to={'/signup'}>Signup here..</Link></p>
                         <div className="form-control mt-6">
-                            <button className="btn btn-primary">Login</button>
+                            <button className="btn bg-[#023b6d] text-[#ffffff]">Login</button>
                         </div>
                     </form>
+                    
                 </div>
             </div>
             {/* <p className="py-6 text-center font-semibold text-2xl">Provident cupiditate voluptatem et in.

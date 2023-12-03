@@ -4,26 +4,21 @@ import feature3 from "../../assets/Feature/feature3.png"
 import SectionTitle from "../../components/SectionTitle"
 
 import CountUp from 'react-countup';
-import useAxiousSecure from "../../hook/useAxiousSecure";
-import { useQuery } from "@tanstack/react-query";
+
+import useFeautreCount from "../../hook/useFeautreCount";
 
 const Feature = () => {
-    const axiousSecure=useAxiousSecure()
-
-    const {data:featureCount={},refetch}=useQuery({
-        queryKey:['featureCount'],
-        queryFn:async()=>{
-            refetch()
-            const res =await axiousSecure.get('/featureCount')
-            return res.data
-        }
-    })
+    const {featureCount}=useFeautreCount()
+    // console.log(featureCount)
    
+    // totalBooked
+    // totalUser
+    // totalDeliverey
    
     return (
         <div>
             <SectionTitle heading="our features"></SectionTitle>
-            <div className="grid grid-cols-3 gap-10 my-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 my-10">
           <div className="bg-base-400 shadow p-5">
           <div className="flex flex-row justify-center items-center gap-10">
                 <div><img className="w-24" src={feature1} alt="" /></div>
@@ -52,19 +47,19 @@ const Feature = () => {
              
         </div>
          {/* show a statistics of your app usage in 3 cards */}
-         <div className="bg-[#272727] p-5 mb-10">
-            <div className="flex flex-row justify-between items-center">
+         <div className="bg-[#023b6d] p-5 mb-10">
+            <div className="flex flex-col md:flex-row justify-between items-center">
                 <div className="text-center">
-                    <h3 className="text-2xl font-semibold text-[#fff]">Parcel Booked</h3>
-                    <h2 className="text-4xl font-semibold text-[#fff]"><CountUp start={0} end={featureCount.totalBooked} delay={5} enableScrollSpy /></h2>
+                    <h3 className="text-2xl font-semibold text-[#ffffff]">Parcel Booked</h3>
+                    <h2 className="text-4xl font-semibold text-[#ffffff]"><CountUp start={0} end={featureCount.totalBooked} delay={5} enableScrollSpy /></h2>
                 </div>
                 <div className="text-center">
-                    <h3 className="text-2xl font-semibold text-[#fff]">Parcel Delivered</h3>
-                    <h2 className="text-4xl font-semibold text-[#fff]"> <CountUp start={0} end={featureCount.totalDeliverey} delay={5} enableScrollSpy/> </h2>
+                    <h3 className="text-2xl font-semibold text-[#ffffff]">Parcel Delivered</h3>
+                    <h2 className="text-4xl font-semibold text-[#ffffff]"> <CountUp start={0} end={featureCount.totalUser} delay={5} enableScrollSpy/> </h2>
                 </div>
                 <div className="text-center">
-                    <h3 className="text-2xl font-semibold text text-[#fff]">Our Customers</h3>
-                    <h2 className="text-4xl font-semibold text-[#fff]"><CountUp start={0} end={featureCount.totalUser} delay={5} enableScrollSpy/>  </h2>
+                    <h3 className="text-2xl font-semibold text text-[#ffffff]">Our Customers</h3>
+                    <h2 className="text-4xl font-semibold text-[#ffffff]"><CountUp start={0} end={featureCount.totalDeliverey} delay={5} enableScrollSpy/>  </h2>
                 </div>
             </div>
 

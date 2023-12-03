@@ -18,12 +18,18 @@ import MyDeliveryList from "../pages/Dashboard/DeliveryMen/DeliveryMen/MyDeliver
 import AllParcel from "../pages/Dashboard/Admin/AllParcel";
 import Reviews from "../pages/Dashboard/DeliveryMen/DeliveryMen/Reviews";
 import ProfileUpdate from "../pages/Dashboard/User/Action/ProfileUpdate";
+import Payment from "../pages/Dashboard/User/Payment/Payment";
+import UserPrivateRoute from "../PrivateRoute/UserPrivateRoute";
+import AdminPrivateRoute from "../PrivateRoute/AdminPrivateRoute";
+import DeliverymenPrivateRoute from "../PrivateRoute/DeliverymenPrivateRoute";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 
 
 export const router = createBrowserRouter([
     {
         path: "/",
         element: <Main></Main>,
+        errorElement:<ErrorPage></ErrorPage>,
         children:[
             {
                 path:'/',
@@ -42,55 +48,61 @@ export const router = createBrowserRouter([
     {
         path:'dashboard',
         element:<PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
+        errorElement:<ErrorPage></ErrorPage>,
         children:[
          {
             path:'bookParcel',
-            element:<PrivateRoute><BookParcel></BookParcel></PrivateRoute>
+            element:<UserPrivateRoute><BookParcel></BookParcel></UserPrivateRoute>
          },
          {
             path:'myParcel',
-            element:<PrivateRoute><MyParcel></MyParcel></PrivateRoute>
+            element:<UserPrivateRoute><MyParcel></MyParcel></UserPrivateRoute>
          },
          {
             path:'parcelDetails/:id',
-            element:<PrivateRoute><ParcelUpdatePage></ParcelUpdatePage></PrivateRoute>,
-            loader:({params})=>fetch(`http://localhost:5000/parcelDetails/${params.id}`)
+            element:<UserPrivateRoute><ParcelUpdatePage></ParcelUpdatePage></UserPrivateRoute>,
+            loader:({params})=>fetch(`https://parcel-management-server-phi.vercel.app/parcelDetails/${params.id}`)
+         },
+         {
+            path:'payment',
+            element:<UserPrivateRoute><Payment></Payment></UserPrivateRoute>
+
          },
          {
             path:'myProfile',
-            element:<MyProfile></MyProfile>
+            element:<UserPrivateRoute><MyProfile></MyProfile></UserPrivateRoute>
          },
          {
             path:'updateProfile/:id',
-            element:<ProfileUpdate></ProfileUpdate>
+            element:<UserPrivateRoute><ProfileUpdate></ProfileUpdate></UserPrivateRoute>
          },
          //admin
          {
             path:'statistics',
-            element:<Statistics></Statistics>
+            element:<AdminPrivateRoute><Statistics></Statistics></AdminPrivateRoute>
          },
          {
             path:'allUsers',
-            element:<AllUsers></AllUsers>,
-            loader:()=>fetch('http://localhost:5000/pageCount')
+            element:<AdminPrivateRoute><AllUsers></AllUsers></AdminPrivateRoute>,
+            loader:()=>fetch('https://parcel-management-server-phi.vercel.app/pageCount')
          },
          {
             path:'allParcels',
-            element:<AllParcel></AllParcel>
+            element:<AdminPrivateRoute><AllParcel></AllParcel></AdminPrivateRoute>
          },
          
          {
             path:'allDeliverymen',
-            element:<AllDeliveryMen></AllDeliveryMen>
+            element:<AdminPrivateRoute><AllDeliveryMen></AllDeliveryMen></AdminPrivateRoute>
          },
          // deliverymen side
          {
             path:'myDeliveryList',
-            element:<MyDeliveryList></MyDeliveryList>
+            element:<DeliverymenPrivateRoute><MyDeliveryList></MyDeliveryList></DeliverymenPrivateRoute>
          },
          {
             path:'reviews',
-            element:<Reviews></Reviews>
+            element:<DeliverymenPrivateRoute><Reviews></Reviews></DeliverymenPrivateRoute>
          },
     ]
     }

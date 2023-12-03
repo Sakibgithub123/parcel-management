@@ -1,15 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiousSecure from "../../../hook/useAxiousSecure";
+import { Helmet } from "react-helmet";
+
 
 
 const AllDeliveryMen = () => {
     const axiousSecure = useAxiousSecure();
   
-    const { data: deliverymens = [], refetch } = useQuery({
+    const { data: deliverymens = [] } = useQuery({
         queryKey: ['deliverymens'],
         queryFn: async () => {
-            const result = await axiousSecure.get('/deliverymens/')
-            refetch()
+            const result = await axiousSecure.get('/deliverymens')
             return result.data
         }
     })
@@ -17,11 +18,17 @@ const AllDeliveryMen = () => {
 
     return (
         <div>
-            <h1>all delivery men</h1>
+            <div>
+                <h3 className="text-center bg-lime-600 text-lime-500 py-4 text-3xl font-extrabold uppercase my-10">All Delivery Men</h3>
+
+            </div>
+            <Helmet>
+                <title>|AllDeliveryMen</title>
+            </Helmet>
             <div className="overflow-x-auto">
                 <table className="table">
                     {/* head */}
-                    <thead>
+                    <thead className="font-semibold text-base text-lime-900 uppercase border-b-2" >
                         <tr>
 
                             <th>Name</th>
@@ -30,7 +37,7 @@ const AllDeliveryMen = () => {
                             <th>Average review</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="font-semibold text-sm text-[#554f4f]">
                         {/* row 1 */}
                         {
                             deliverymens.map(deliverymen =>
@@ -42,8 +49,8 @@ const AllDeliveryMen = () => {
                                         <td>
                                             {deliverymen.phone}
                                         </td>
-                                        <td>{deliverymen.total_delivered}</td>
-                                        <td>{deliverymen.total_rating}</td>
+                                        <td>{deliverymen.totalDelivered}</td>
+                                        <td>{deliverymen.totalRating}</td>
                                        
                                     </tr>
 
