@@ -77,6 +77,7 @@ export const router = createBrowserRouter([
             element:<UserPrivateRoute><ProfileUpdate></ProfileUpdate></UserPrivateRoute>
          },
          //admin
+        
          {
             path:'statistics',
             element:<AdminPrivateRoute><Statistics></Statistics></AdminPrivateRoute>
@@ -96,9 +97,11 @@ export const router = createBrowserRouter([
             element:<AdminPrivateRoute><AllDeliveryMen></AllDeliveryMen></AdminPrivateRoute>
          },
          // deliverymen side
+        
+       
          {
             path:'myDeliveryList',
-            element:<DeliverymenPrivateRoute><MyDeliveryList></MyDeliveryList></DeliverymenPrivateRoute>
+            element:<DeliverymenPrivateRoute><MyDeliveryList></MyDeliveryList></DeliverymenPrivateRoute>,
          },
          {
             path:'reviews',

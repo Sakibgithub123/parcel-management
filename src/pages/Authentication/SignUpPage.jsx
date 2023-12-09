@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import img from "../../assets/Banner/login3.webp"
 import { useForm } from "react-hook-form"
 import { AuthContext } from "../../Provider/AuthProvider";
@@ -15,6 +15,7 @@ const SignUpPage = () => {
     const { createUser, updateUserProfile, userLogout } = useContext(AuthContext)
     const { register, handleSubmit, formState: { errors }, } = useForm()
     const navigate = useNavigate()
+    const [error,setError]=useState('')
     const axiousSecure=useAxiousSecure()
     const onSubmit =  (data) => {
         console.log(data)
@@ -41,7 +42,7 @@ const SignUpPage = () => {
                     
                             }
                             // console.log(userInfo)
-                            const userRes = await axios.post('https://parcel-management-server-phi.vercel.app//users', userInfo)
+                            const userRes = await axios.post('https://parcel-management-server-phi.vercel.app/users', userInfo)
                             if (userRes.data.insertedId) {
                                 Swal.fire({
                                     title: "Good job!",
@@ -66,6 +67,7 @@ const SignUpPage = () => {
             })
             .catch(error => {
                 console.error(error)
+                setError(error)
             })
 
     }
@@ -83,6 +85,9 @@ const SignUpPage = () => {
                 <div className="card  lg:w-1/3 shadow-2xl bg-base-100">
                     <form onSubmit={handleSubmit(onSubmit)} className="card-body">
                         <h3 className="text-2xl font-bold text-center mb-4">SignUp</h3>
+                        {
+                        error? <p className="text-red-500 text-center">Email Already Exists!</p> :""
+                    }
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Name</span>

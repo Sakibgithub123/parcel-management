@@ -1,7 +1,7 @@
 import img from "../../assets/Banner/login3.webp"
 import googleimg from "../../assets/Banner/googlee.png"
 import { useForm } from "react-hook-form"
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import axios from "axios";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -11,6 +11,7 @@ const LoginPage = () => {
     const { userLogin, googleLogin } = useContext(AuthContext)
     const location=useLocation();
     const navigate=useNavigate();
+    const [error,setError]=useState('')
     const from = location.state?.from?.pathname || "/";
     const { register, handleSubmit, formState: { errors }, } = useForm()
     const onSubmit = (data) => {
@@ -28,6 +29,7 @@ const LoginPage = () => {
             })
             .catch(error => {
                 console.error(error)
+                setError(error)
             })
     }
     const handlegoogleLogin=()=>{
@@ -38,7 +40,7 @@ const LoginPage = () => {
                 email:result.user.displayName,
                 role:'user'
             }
-            axios.post('https://parcel-management-server-phi.vercel.app//user',userInfo)
+            axios.post('https://parcel-management-server-phi.vercel.app/user',userInfo)
             .then(res=>{
                 console.log(res.data)
                 Swal.fire({
@@ -67,6 +69,9 @@ const LoginPage = () => {
                 </div>
                 <div className="card lg:w-1/3 shadow-2xl bg-base-100">
                     <h3 className="text-2xl font-bold text-center mb-4">Login</h3>
+                    {
+                        error? <p className="text-red-500 text-center">Email or Password Don't Match!</p> :""
+                    }
                     <button onClick={handlegoogleLogin} className="btn flex flex-row justify-center items-center"> <img src={googleimg} width={36} alt="" /><span>Google login</span></button>
                     <form onSubmit={handleSubmit(onSubmit)} className="card-body">
                         <div className="form-control">

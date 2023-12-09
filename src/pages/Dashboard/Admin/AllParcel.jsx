@@ -3,13 +3,12 @@ import useAxiousSecure from "../../../hook/useAxiousSecure";
 import { useForm } from "react-hook-form"
 import Swal from 'sweetalert2'
 import useDeliverymen from "../../../hook/useDeliverymen";
-// import useParcels from "../../../hook/useParcels";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-// import { useState } from "react";
+
 
 const AllParcel = () => {
-    const { register,  formState: { errors }, } = useForm()
+    const { register, formState: { errors }, } = useForm()
     const axiousSecure = useAxiousSecure();
     const [deliverymens] = useDeliverymen()
     // const [parcels] = useParcels()
@@ -50,7 +49,7 @@ const AllParcel = () => {
                 title: "Deliverymen assign Success!",
                 showConfirmButton: false,
                 timer: 1500
-              });
+            });
         }
     }
     const handleFilter = e => {
@@ -154,10 +153,10 @@ const AllParcel = () => {
                                                             </div>
                                                         </form>
                                                         <form method="dialog">
-                                                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                                                    </form>
+                                                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                        </form>
                                                     </div>
-                                                    
+
                                                 </div>
                                             </dialog>
                                             <button className="bg-green-400 text-[#ffffff] py-2 px-3 rounded-sm mx-2" onClick={() => document.getElementById(`${parcel._id}`).showModal()}>Mange</button>

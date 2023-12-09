@@ -9,11 +9,11 @@ import { Helmet } from "react-helmet";
 const ParcelUpdatePage = () => {
     const { user } = useContext(AuthContext)
     const axiousSecure = useAxiousSecure()
-    const disabled=true;
+    const disabled = true;
     const { _id, phone, parcel_type, parcel_weight, reciever_name, reciever_phone_no, delivery_address,
         delivery_date,
         delivery_latitude,
-        delivery_longitude, price, status } = useLoaderData()
+        delivery_longitude,  status } = useLoaderData()
 
     const [weightPrice, setWeightPrice] = useState(null)
     const readOnly = true;
@@ -142,20 +142,20 @@ const ParcelUpdatePage = () => {
                     <label className="label">
                         <span className="label-text">Price</span>
                     </label>
-                    <input type="text" readOnly={readOnly} defaultValue={weightPrice ? weightPrice : price} {...register("price", { required: true, })} placeholder="price" className="input input-bordered bg-slate-200" />
+                    <input type="text" readOnly={readOnly} defaultValue={weightPrice} {...register("price", { required: true, })} placeholder="price" className="input input-bordered bg-slate-200" />
                     {errors.price?.type === "required" && <span className="text-red-900">Price field is required</span>}
                 </div>
                 <div className="form-control mt-6">
                     {
-                        status === 'pending' ? 
-                        <button type="submit" className="btn bg-lime-900 text-[#ffffff]">Update Parcel</button>
-                         :<div className="space-y-3">
-                         <p> <button type="submit" disabled={disabled} className="btn bg-lime-900 text-[#ffffff]">Update Parcel</button></p>
-                         <p className="text-warning"><span className="font-semibold">Node : </span>
-                         You can update the booking only if the booking status is ‘pending’.</p>
-                         </div>
+                        status === 'pending' ?
+                            <button type="submit" className="btn bg-lime-900 text-[#ffffff]">Update Parcel</button>
+                            : <div className="space-y-3">
+                                <p> <button type="submit" disabled={disabled} className="btn bg-lime-900 text-[#ffffff]">Update Parcel</button></p>
+                                <p className="text-warning"><span className="font-semibold">Node : </span>
+                                    You can update the booking only if the booking status is ‘pending’.</p>
+                            </div>
                     }
-                    
+
                 </div>
             </form>
 

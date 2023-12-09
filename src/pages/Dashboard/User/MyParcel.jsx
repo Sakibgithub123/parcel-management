@@ -5,7 +5,6 @@ import { AuthContext } from '../../../Provider/AuthProvider';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2'
 import { useForm } from "react-hook-form"
-import { document } from 'postcss';
 import { Helmet } from 'react-helmet';
 
 const MyParcel = () => {
@@ -145,7 +144,7 @@ const MyParcel = () => {
                         </tr>
                     </thead>
                     <tbody className="font-semibold text-sm text-[#554f4f]">
-                        
+
                         {
                             filterParcel.map(parcel =>
                                 <>
@@ -159,6 +158,7 @@ const MyParcel = () => {
                                         <td>{parcel.delivery_men_id ? parcel.delivery_men_id : ""}</td>
                                         <td className='text-red-400'>{parcel.status}</td>
                                         {/* <td>{parcel._id}</td> */}
+
                                         <td>
                                             <dialog id={parcel._id} className="modal modal-bottom sm:modal-middle">
                                                 <div className="modal-box">
@@ -173,7 +173,7 @@ const MyParcel = () => {
                                                                 <label className="label text-center">
                                                                     <span className="label-text ">Delivery Men Id</span>
                                                                 </label>
-                                                                <input type="text" defaultValue={parcel.delivery_men_id} {...register("delivery_men_id", { required: true, })} className="input input-bordered" />
+                                                                <input type="text" defaultValue={parcel.delivery_men_id} name='delivery_men_id' className="input input-bordered" />
                                                             </div>
                                                             <div className="form-control">
                                                                 <label className="label">
@@ -196,19 +196,24 @@ const MyParcel = () => {
                                                             </div>
                                                         </form>
                                                         <form method="dialog">
-                                                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-                                                    </form>
+                                                            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                        </form>
                                                     </div>
-                                                    
+
                                                 </div>
                                             </dialog>
                                             {
-                                                parcel.status == 'delivered' ?  <button className="bg-rose-400 text-[#ffffff] py-2 px-3 rounded-sm"  onClick={() => document.getElementById(`${parcel._id}`).showModal()}>Review</button> : ""
+                                                parcel.status == 'delivered' ? <button className="bg-rose-400 text-[#ffffff] py-2 px-3 my-2 mx-2  rounded-sm" onClick={() => document.getElementById(`${parcel._id}`).showModal()}>Review</button> : ""
                                             }
-                                        
-                                            <div> <button onClick={() => handleCancelBooking(parcel._id)} disabled={parcel.status == 'cancelled' ? disableTrue : disableFalse} className="bg-red-400 text-[#ffffff] py-2 px-3 my-2 mx-2 rounded-sm">Cancel</button></div>
-                                            <div><Link to="/dashboard/payment"> <button className="bg-green-400 text-[#ffffff] py-2 px-3 rounded-sm mx-2">Pay</button></Link></div>
+
+                                            {
+                                                parcel.status === 'delivered' ? "" : <div> <button onClick={() => handleCancelBooking(parcel._id)} disabled={parcel.status === 'cancelled' ? disableTrue : disableFalse} className="bg-red-400 text-[#ffffff] py-2 px-3 my-2 mx-2 rounded-sm">Cancel</button></div>
+
+                                            }
+                                            <div><Link to="/dashboard/payment"> <button className="bg-green-400 text-[#ffffff] py-2 px-3 my-3 rounded-sm mx-2">Pay</button></Link></div>
                                             <div><Link to={`/dashboard/parcelDetails/${parcel._id}`}><button className="bg-lime-400 text-[#ffffff] py-2 px-3 rounded-sm my-2 mx-2">Update</button></Link></div>
+
+
                                         </td>
                                     </tr>
                                 </>
@@ -216,6 +221,7 @@ const MyParcel = () => {
                         }
                     </tbody>
                 </table>
+
             </div>
         </div>
     );

@@ -23,19 +23,19 @@ const Dashboard = () => {
     const [isDeliverymen] = useIsDeliverymen()
     const { userLogout } = useContext(AuthContext)
 
-    const handleLogOut=()=>{
+    const handleLogOut = () => {
         userLogout()
-        .then(()=>{})
-        .catch()
+            .then(() => { })
+            .catch()
 
     }
 
     return (
         <div className="flex">
+              <Helmet>
+                    <title>Dashboard</title>
+                </Helmet>
             <div className="w-70 min-h-screen bg-lime-400 text-[#023b6d] font-semibold text-base py-10 mr-8">
-            <Helmet>
-                <title>Dashboard</title>
-            </Helmet>
                 <ul className="menu w-50 ">
                     {isUser ?
                         <>
@@ -82,13 +82,14 @@ const Dashboard = () => {
                             <>
                                 <div className="divider text-lg font-bold bg-white rounded-2xl"><img className="text-center" src={parcelLogo} width={96} alt="" /></div>
                                 <div className="divider text-lg font-bold text-[#000] border-t-2  border-b-2 p-4"> Delivery Men Dashboard</div>
+                                <ul className="menu w-50 ">
                                 <li>
                                     <NavLink to='/dashboard/myDeliveryList'> <FaRectangleList></FaRectangleList>My Delivery List  </NavLink>
                                 </li>
                                 <li>
                                     <NavLink to='/dashboard/reviews'> <MdRateReview></MdRateReview>Reviews  </NavLink>
                                 </li>
-
+                                </ul>                           
                             </>
                             : ""
                     }

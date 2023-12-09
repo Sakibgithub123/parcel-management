@@ -26,7 +26,7 @@ const TopDeliveryMan = () => {
     return (
         <div>
             <SectionTitle heading="our top delivery person"></SectionTitle>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 {
                     topDelivery.slice(0, 3).map(topDeliveryman =>
                       <TopDelivermanDetails key={topDeliveryman._id} rating={rating} topDeliveryman={topDeliveryman} setRating={topDeliveryman.totalRating} ></TopDelivermanDetails>
