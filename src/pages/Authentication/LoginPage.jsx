@@ -104,9 +104,6 @@ const LoginPage = () => {
                     
                 </div>
             </div>
-            {/* <p className="py-6 text-center font-semibold text-2xl">Provident cupiditate voluptatem et in.
-                     Quaerat fugiat ut assumenda excepturi exercitationem quasi. 
-                     In deleniti eaque aut repudiandae et a id nisi.</p> */}
         </div>
     );
 };

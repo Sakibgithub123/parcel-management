@@ -11,23 +11,17 @@ const AllParcel = () => {
     const { register, formState: { errors }, } = useForm()
     const axiousSecure = useAxiousSecure();
     const [deliverymens] = useDeliverymen()
-    // const [parcels] = useParcels()
     const [allParcel, setAllParcel] = useState([])
     const [allParcelfilter, setFilterParcel] = useState([])
 
     useEffect(() => {
         axiousSecure.get('/parcels/')
             .then(res => {
-                // 
-                // return res.data
                 setAllParcel(res.data)
                 setFilterParcel(res.data)
             })
 
     }, [])
-
-
-
 
 
     const handleAssignDeliverymen = async (e) => {
@@ -60,9 +54,6 @@ const AllParcel = () => {
         console.log(start, end)
         const filterdate = allParcel.filter(parcel => parcel.booking_date >= start && parcel.booking_date <= end)
         setFilterParcel(filterdate)
-
-
-
     }
     return (
         <div>
@@ -135,7 +126,6 @@ const AllParcel = () => {
                                                                             <>
                                                                                 <option defaultValue="default" key={deliverymen._id} value={deliverymen._id}>{deliverymen._id}</option>
                                                                             </>
-
                                                                         )
                                                                     }
                                                                 </select>

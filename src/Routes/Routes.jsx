@@ -23,6 +23,8 @@ import UserPrivateRoute from "../PrivateRoute/UserPrivateRoute";
 import AdminPrivateRoute from "../PrivateRoute/AdminPrivateRoute";
 import DeliverymenPrivateRoute from "../PrivateRoute/DeliverymenPrivateRoute";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
+import AddBranch from "../pages/Dashboard/Admin/AddBranch";
+import Branches from "../pages/Dashboard/User/Branches";
 
 
 export const router = createBrowserRouter([
@@ -69,6 +71,10 @@ export const router = createBrowserRouter([
 
          },
          {
+            path:'branches',
+            element:<UserPrivateRoute><Branches></Branches></UserPrivateRoute>
+         },
+         {
             path:'myProfile',
             element:<UserPrivateRoute><MyProfile></MyProfile></UserPrivateRoute>
          },
@@ -90,6 +96,10 @@ export const router = createBrowserRouter([
          {
             path:'allParcels',
             element:<AdminPrivateRoute><AllParcel></AllParcel></AdminPrivateRoute>
+         },
+         {
+            path:'addbranch',
+            element:<AdminPrivateRoute><AddBranch></AddBranch></AdminPrivateRoute>
          },
          
          {

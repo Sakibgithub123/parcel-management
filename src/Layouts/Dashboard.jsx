@@ -5,7 +5,7 @@ import { IoBook } from "react-icons/io5";
 import { ImCart } from "react-icons/im";
 import { CgProfile } from "react-icons/cg";
 import { FcStatistics } from "react-icons/fc";
-import { FaCarTunnel, FaLock } from "react-icons/fa6";
+import { FaBraille, FaCarTunnel, FaLock } from "react-icons/fa6";
 import { PiUsersFourFill } from "react-icons/pi";
 import { GiDeliveryDrone } from "react-icons/gi";
 import { FaRectangleList } from "react-icons/fa6";
@@ -48,6 +48,9 @@ const Dashboard = () => {
                                 <NavLink to='/dashboard/myParcel'> <ImCart></ImCart>My Parcel </NavLink>
                             </li>
                             <li>
+                                <NavLink to='/dashboard/branches'> <FaBraille></FaBraille>Find Nearby Branches</NavLink>
+                            </li>
+                            <li>
                                 <NavLink to='/dashboard/myProfile'><CgProfile></CgProfile>My Profile </NavLink>
                             </li>
                         </>
@@ -62,6 +65,9 @@ const Dashboard = () => {
 
                                 <li>
                                     <NavLink to='/dashboard/statistics'><FcStatistics></FcStatistics>Statistics </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink to='/dashboard/addbranch'> <FaBraille></FaBraille>Add Branch </NavLink>
                                 </li>
                                 <li>
                                     <NavLink to='/dashboard/allParcels'> <FaCarTunnel></FaCarTunnel>All Parcels </NavLink>

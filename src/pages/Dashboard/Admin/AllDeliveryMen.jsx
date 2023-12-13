@@ -3,10 +3,9 @@ import useAxiousSecure from "../../../hook/useAxiousSecure";
 import { Helmet } from "react-helmet";
 
 
-
 const AllDeliveryMen = () => {
     const axiousSecure = useAxiousSecure();
-  
+
     const { data: deliverymens = [] } = useQuery({
         queryKey: ['deliverymens'],
         queryFn: async () => {
@@ -27,10 +26,8 @@ const AllDeliveryMen = () => {
             </Helmet>
             <div className="overflow-x-auto">
                 <table className="table">
-                    {/* head */}
                     <thead className="font-semibold text-base text-lime-900 uppercase border-b-2" >
                         <tr>
-
                             <th>Name</th>
                             <th>Phone</th>
                             <th>No of parcel delivered</th>
@@ -38,7 +35,6 @@ const AllDeliveryMen = () => {
                         </tr>
                     </thead>
                     <tbody className="font-semibold text-sm text-[#554f4f]">
-                        {/* row 1 */}
                         {
                             deliverymens.map(deliverymen =>
                                 <>
@@ -51,11 +47,8 @@ const AllDeliveryMen = () => {
                                         </td>
                                         <td>{deliverymen.totalDelivered}</td>
                                         <td>{deliverymen.totalRating}</td>
-                                       
+
                                     </tr>
-
-
-
                                 </>
                             )
                         }

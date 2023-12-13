@@ -4,7 +4,6 @@ import useAxiousSecure from "../../../hook/useAxiousSecure";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from 'recharts';
 import { Helmet } from "react-helmet";
 import { FaDollarSign, FaUser, FaUserAstronaut } from "react-icons/fa6";
-import { FaUserAlt } from "react-icons/fa";
 
 
 const Statistics = () => {
@@ -49,7 +48,7 @@ const Statistics = () => {
                     </div>
                 </div>
             </div>
-            <div className="my-20 flex justify-center"> 
+            <div className="my-20 flex justify-center">
                 <BarChart width={600} height={300} data={chartsdata}>
                     <XAxis dataKey="booking_date" stroke="#65a30d" />
                     <YAxis />
@@ -58,10 +57,6 @@ const Statistics = () => {
                     <CartesianGrid stroke="#65a30d" strokeDasharray="5 5" />
                     <Bar dataKey="totalBooking" fill="#65a30d" barSize={30} />
                 </BarChart>
-               
-
-
-
             </div>
         </div>
     );

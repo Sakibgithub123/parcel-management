@@ -4,9 +4,9 @@ import { useContext } from "react";
 import { AuthContext } from "../../../../Provider/AuthProvider";
 import Swal from 'sweetalert2'
 import { Helmet } from "react-helmet";
-// import * as React from 'react';
-// import Map from 'react-map-gl';
-// <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v<YOUR_MAPBOX_VERSION>/mapbox-gl.css' rel='stylesheet' />
+// import LocationMap from "./LocationMap";
+import MyDestination from "./MyDestination";
+
 
 
 const MyDeliveryList = () => {
@@ -19,11 +19,6 @@ const MyDeliveryList = () => {
             return result.data
         }
     })
-    // console.log(deliverymenId[0]._id)
-    // const id=deliverymenId[0]._id
-    // console.log(id)
-    // console.log(deliverymenId)
-    // console.log(deliverymenId._id)
     const { data: deliverylists = [], refetch } = useQuery({
         queryKey: ['deliverylists'],
         queryFn: async () => {
@@ -31,7 +26,7 @@ const MyDeliveryList = () => {
             return result.data
         }
     })
-    // console.log(deliverylists)
+
     //cancel booking
     const handleCancelBooking = id => {
         Swal.fire({
@@ -44,9 +39,6 @@ const MyDeliveryList = () => {
             confirmButtonText: "Yes, cancel it!"
         }).then(async (result) => {
             if (result.isConfirmed) {
-                // const cancelStatus={
-                //     status:'Cancelled'
-                // }
                 const cancelParcel = await axiousSecure.patch(`/parcels/${id}`)
                 if (cancelParcel.data.modifiedCount > 0) {
                     refetch()
@@ -71,9 +63,6 @@ const MyDeliveryList = () => {
             confirmButtonText: "Yes, Delivered it!"
         }).then(async (result) => {
             if (result.isConfirmed) {
-                // const cancelStatus={
-                //     status:'Cancelled'
-                // }
                 const cancelParcel = await axiousSecure.patch(`/parcelsDelivery/${id}`)
                 if (cancelParcel.data.modifiedCount > 0) {
                     refetch()
@@ -86,6 +75,15 @@ const MyDeliveryList = () => {
             }
         });
     }
+
+    const showModal = (modalId) => {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.showModal();
+        }
+    };
+
+
     return (
         <div>
 
@@ -112,7 +110,6 @@ const MyDeliveryList = () => {
                         </tr>
                     </thead>
                     <tbody className="font-semibold text-sm text-[#554f4f]">
-                        {/* row 1 */}
                         {
                             deliverylists.map(deliverylist =>
                                 <>
@@ -136,9 +133,20 @@ const MyDeliveryList = () => {
                                             {
                                                 deliverylist.status == 'delivered' ? "" :
                                                     <button onClick={() => { handleDeliveredBooking(deliverylist._id) }} className="bg-lime-400 text-[#ffffff] py-2 px-3 rounded-sm my-2 mx-2" >Delivery</button>
-
                                             }
-                                            <button className="bg-green-400 text-[#ffffff] py-2 px-3 rounded-sm mx-2">View Location</button> 
+                                            <button onClick={() => showModal(`${deliverylist._id}`)} className="bg-green-400 text-[#ffffff] py-2 px-3 rounded-sm mx-2">View Location</button>
+                                            <dialog id={`${deliverylist._id}`} className="modal">
+                                                <div className="modal-box">
+                                                    <form method="dialog">
+                                                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                                                    </form>
+                                                    <MyDestination
+                                                        latitude={deliverylist.delivery_latitude}
+                                                        longitude={deliverylist.delivery_longitude}
+                                                        mapContainerId={`map-${deliverylist._id}`} // Unique ID for each map container
+                                                    />
+                                                </div>
+                                            </dialog>
                                         </th>
                                     </tr>
                                 </>
@@ -147,7 +155,6 @@ const MyDeliveryList = () => {
                     </tbody>
                 </table>
             </div>
-
         </div>
     );
 };

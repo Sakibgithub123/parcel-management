@@ -14,16 +14,9 @@ const MyParcel = () => {
     const [filterParcel, setFilterParcel] = useState([])
     const disableTrue = true;
     const disableFalse = false;
-    // const[allParcel1,setAllParcel1]=useState()
+  
     const axiousSecure = useAxiousSecure();
-    // const { data: parcels  } = useQuery({
-    //     queryKey: ['parcels'],
-    //     queryFn: async () => {
-    //         const result = await axiousSecure.get(`/parcels/${user.email}`)
-    //         return result.data
-
-    //     }
-    // })
+    
     useEffect(() => {
         axiousSecure.get(`/parcels/${user.email}`)
             .then(res => {
